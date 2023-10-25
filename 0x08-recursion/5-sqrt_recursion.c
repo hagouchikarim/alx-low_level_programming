@@ -11,13 +11,21 @@ int _sqrt_recursion(int n)
 	return (square(n, 1));
 }
 
-int square(int n, int val)
+/**
+ * square - find square root
+ * @n: int
+ * @vale: square root
+ * Return: void
+ */
+
+
+int square(int n, int vale)
 {
 
-	if (val * val == n)
-		return (val);
-	else if (val * val < n)
-		return  (square(n, val + 1));
+	if (vale * vale == n)
+		return (vale);
+	else if (vale * vale < n)
+		return  (square(n, vale + 1));
 	else
 		return (-1);
 
