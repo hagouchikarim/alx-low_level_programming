@@ -12,6 +12,14 @@ int is_prime_number(int n)
 	return (check_prime(n, 2));
 }
 
+/**
+ * check_prime - Check all number < n if they can divide it
+ * @n: int
+ * @resp: int
+ * Return: void
+ */
+
+
 int check_prime(int n, int i)
 {
 
