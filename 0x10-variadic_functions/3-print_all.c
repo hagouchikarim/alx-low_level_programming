@@ -1,80 +1,57 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
 #include "variadic_functions.h"
-/**
- * print_int - prints an integer
- * @args: the list of params
- */
-void print_int(va_list args)
-{
-	printf("%d", va_arg(args, int));
-}
-/**
- * print_char - prints a char
- * @args: the list of params
- */
-void print_char(va_list args)
-{
-	printf("%c", va_arg(args, int));
-}
-/**
- * print_string - prints a string
- * @args: the list of params
- */
-void print_string(va_list args)
-{
-	char *z = va_arg(args, char *);
+	#include <stdarg.h>
+	#include <stdio.h>
 
-	if (!z)
-	{
-		printf("(nil)");
-		return;
-	}
-	printf("%s", z);
-}
-/**
- * print_float - prints floats
- * @args: the list of params
- */
-void print_float(va_list args)
-{
-	printf("%f", va_arg(args, double));
-}
-/**
- * print_all - prints all
- * @format: formats of params
- */
-void print_all(const char * const format, ...)
-{
-	types_t types[] = {
-	{'c', print_char},
-	{'i', print_int},
-	{'f', print_float},
-	{'s', print_string},
-	{'\0', NULL}
-	};
-	va_list args;
-	char *sep1 = "", *sep2 = ", ";
-	int count1 = 0, count2 = 0;
 
-	va_start(args, format);
-	while (format !=  NULL && format[count1] != '\0')
+	/**
+	 * print_all - prints anything
+	 * @format: list of types of arguments passed to the function
+	 */
+	void print_all(const char * const format, ...)
 	{
-		count2 = 0;
-		while (types[count2].z != '\0')
+		int i = 0;
+		char *str, *sep = "";
+
+
+		va_list list;
+
+
+		va_start(list, format);
+
+
+		if (format)
 		{
-			if (format[count1] == types[count2].z)
+			while (format[i])
 			{
-				printf("%s", sep1);
-				types[count2].f(args);
-				sep1 = sep2;
+				switch (format[i])
+				{
+					case 'c':
+						printf("%s%c", sep, va_arg(list, int));
+						break;
+					case 'i':
+						printf("%s%d", sep, va_arg(list, int));
+						break;
+					case 'f':
+						printf("%s%f", sep, va_arg(list, double));
+						break;
+					case 's':
+						str = va_arg(list, char *);
+						if (!str)
+							str = "(nil)";
+						printf("%s%s", sep, str);
+						break;
+					default:
+						i++;
+						continue;
+				}
+				sep = ", ";
+				i++;
 			}
-			count2++;
 		}
-		count1++;
+
+
+		printf("\n");
+		va_end(list);
 	}
-	printf("\n");
-	va_end(args);
-}
+
 
